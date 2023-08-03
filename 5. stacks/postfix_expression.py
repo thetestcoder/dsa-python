@@ -24,4 +24,4 @@ def evaluate_postfix(input_string):
             stack.put(val)
     return stack.get()
 
-print(evaluate_postfix('2 3 4 5 + *'))
+print(evaluate_postfix('2 3 +'))
