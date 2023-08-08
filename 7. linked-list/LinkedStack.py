@@ -1,4 +1,4 @@
-import EmptyException
+from EmptyException import EmptyException
 
 class LinkedStack:
     class _Node:
