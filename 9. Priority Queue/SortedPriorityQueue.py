@@ -21,13 +21,12 @@ class SortedPriorityQueue(PriorityQueueBase):
 
     
     def min(self):
-        p = self._find_min()
-        item = p.element()
+        if self.is_empty(): raise EmptyException("Priority Queue is Empty")
+        item = self._data.frist()
         return (item._key, item._value)
     
     def remove_min(self):
         if self.is_empty(): raise EmptyException("Priority Queue is Empty")
-        p = self._find_min()
         item = self._data.delete(self._data.first())
         return (item._key, item._value)
     
