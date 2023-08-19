@@ -22,7 +22,7 @@ class SortedPriorityQueue(PriorityQueueBase):
     
     def min(self):
         if self.is_empty(): raise EmptyException("Priority Queue is Empty")
-        item = self._data.frist()
+        item = self._data.first()
         return (item._key, item._value)
     
     def remove_min(self):
