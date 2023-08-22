@@ -1,4 +1,3 @@
-from typing import Iterator
 from HashMapBase import HashMapBase
 from UnsortedTableMap import UnsortedTableMap
 
@@ -24,7 +23,7 @@ class ChainHashMap(HashMapBase):
             raise KeyError("Key Error: ", repr(k))
         del bucket[k]
 
-    def __iter__(self) -> Iterator:
+    def __iter__(self):
         for bucket in self._table:
             if bucket is not None:
                 for key in bucket:
