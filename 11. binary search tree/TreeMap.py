@@ -131,5 +131,69 @@ class TreeMap(LinkedBinaryTree, MapBase):
         while p is not None:
             yield p.key()
             p = self.after(p)
+    
+    def delete(self, p):
+        self._validate(p)
+        if self.left(p) and self.right(p):
+            replacement = self._subtree_last_position(self.left(p))
+            self._replace(p, replacement.element())
+        parent = self.parent(p)
+        self._delete(p)
+        self._rebalance_delete(parent)
+    
+    def __delitem__(self, k):
+        if not self.is_empty():
+            p = self._subtree_search(self.root(), k)
+            if k == p.key():
+                self.delete(p)
+                return
+            self._rebalance_access(p)
+        raise KeyError("Key Error: " + repr(k))
+    
+    def _rebalance_delete(self, p): pass
+    def _rebalance_insert(self, p): pass
+    def _rebalance_access(self, p): pass
+
+
+    def _relink(self, parent, child, make_left_child):
+        if make_left_child:
+            parent._left = child
+        else:
+            parent._right = child
+        
+        if child is not None:
+            child._parent = parent
+        
+
+    def _rotate(self, p):
+        x = p._node
+        y = x._parent
+        z = y._parent
+
+        if z is None:
+            self._root = x
+            x._parent = None
+        else:
+            self._relink(z, x, y==z._left)
+        
+        if x == y._left:
+            self._relink(y, x._right, True)
+            self._relink(x, y, False)
+        else:
+            self._relink(y, x._left, False)
+            self._relink(x, y, True)
+
+    def _restructure(self, x):
+        y = self.parent(x)
+        z = self.parent(y)
+
+        if (x == self.right(y) == (y == self.right(z))):
+            self._rotate(y)
+            return y
+        else:
+            self._rotate(x)
+            self._rotate(x)
+            return x
+
                 
       
